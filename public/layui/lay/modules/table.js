@@ -193,7 +193,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
     ,loading: true //请求数据时，是否显示loading
     ,cellMinWidth: 60 //所有单元格默认最小宽度
     ,text: {
-      none: '无数据'
+      none: '暂无数据'
     }
   };
 
@@ -1104,10 +1104,15 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
       ,tr = that.layBody.find('tr[data-index="'+ index +'"]')
       ,ELEM_CLICK = 'layui-table-click'
       ,data = table.cache[that.key][index];
-      
-      layui.event.call(this, MOD_NAME, 'tool('+ filter +')', {
+		var event = othis.attr('lay-event');
+		if(event == 'edit')
+			edit(data);
+		else
+			del(data);
+
+	   layui.event.call(this, MOD_NAME, 'tool('+ filter +')', {
         data: table.clearCacheKey(data)
-        ,event: othis.attr('lay-event')
+        ,event: event
         ,tr: tr
         ,del: function(){
           table.cache[that.key][index] = [];

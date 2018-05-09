@@ -1,48 +1,113 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>角色</title>
-  <link rel="stylesheet" href="/layui/css/layui.css" media="all">
-  <link rel="stylesheet" href="/css/common.css">
-</head>
-<body>
-	<button class="layui-btn" id="user_add">添加角色</button>
-	<a href="http://www.layui.com" class="layui-btn">LAYUI</a>
-	<table id="users_table" lay-filter="test"></table>
-<script src="/layui/layui.js"></script>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script>
-var table;
-layui.use('table', function(){
-  table = layui.table;
-  
-  //第一个实例
-  table.render({
-    elem: '#users_table'
-    ,height: 500
-    ,url: '/roles' //数据接口
-    ,page: true //开启分页
-    ,cols: [[ //表头
-      {field: '_id', title: 'ID', width:250, sort: true, fixed: 'left'}
-      ,{field: 'roleName', title: '用户名', sort: true}
-      ,{field: 'remarks', title: '备注'}
-    ]]
-  });
-});
 
-$('#user_add').click(function(){
-	layer.open({
-		title:'添加角色',
-	  type: 2, 
-	  area: ['500px', '300px'],
-	  content: ['/role_add.html','no'] //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-	});
-});
+	<head>
+		<meta charset="utf-8">
+		<title>角色</title>
+		<link rel="stylesheet" href="/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/layui/css/modules/layer/default/layer.css">
+	</head>
 
-function reloadData(){
-		table.reload('users_table',{page:2})
-}
-</script>
-</body>
+	<body>
+		<button class="layui-btn" id="user_add">添加角色</button>
+		<a href="http://www.layui.com" class="layui-btn">LAYUI</a>
+		<table id="users_table" lay-filter="test"></table>
+
+		<!-- 工具栏  -->
+		<div id="toolBar" style="display: none;">
+			<a class="layui-btn layui-btn-disabled layui-btn-xs" onclick="javascript:;">查看</a>
+			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</div>
+		<script src="/layui/layui.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="/layui/lay/modules/layer.js"></script>
+
+		<script>
+			var table;
+			layui.use('table', function() {
+				table = layui.table;
+
+				//第一个实例
+				table.render({
+					elem: '#users_table',
+					height: 500,
+					url: '/role/list' //数据接口
+						,
+					page: true //开启分页
+						,
+					cols: [
+						[ //表头
+							{field: '_id',title: 'ID',width: 250,sort: true,fixed: 'left'}, 
+							{field: 'roleName',title: '用户名',sort: true}, 
+							{field: 'remarks',title: '备注'}, 
+							{field: 'createdTime',title: '创建时间'},
+							{title: '操作',width: 180,align: 'center',toolbar: '#toolBar'} //这里的toolbar值是模板元素的选择器
+						]
+					]
+				});
+			});
+
+			$('#user_add').click(function() {
+				layer.open({
+					title: '添加角色',
+					type: 2,
+					area: ['500px', '300px'],
+					content: ['/role_add.html', 'no'] //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				});
+			});
+
+			function reloadData() {
+				table.reload('users_table')
+			}
+			$(window).on('resize',function(){
+				
+			})
+			//删除数据,,,table.js会调用这个方法
+			function del(data) {
+				layer.confirm('你确定删除吗？', {
+					btn: ['确认', '取消'] //可以无限个按钮
+					, anim: 3
+				}, function(index) {
+					$.ajax({
+						type: "delete",
+						url: "/role",
+						data: {
+							_id: data._id
+						},
+						async: true,
+						success: function(res) {
+							layer.alert(res, function() {
+								reloadData();
+								layer.closeAll()
+							});
+						}
+					});
+				});
+			}
+			var info ={};
+			function edit(data) {
+				info = data;
+				var index = layer.open({
+					title: '编辑角色',
+					type: 2, anim: 4,
+					area: ['500px', '300px'],
+					content: '/role_edit.html' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					,cancel: function(index, layero){ 
+
+						return true;
+					}  
+				});
+			}
+
+			//页面一打开就执行弹层
+			layer.ready(function() {
+				layer.msg('欢迎您!', {
+					time: 2000
+				});
+			});
+		</script>
+	</body>
+
 </html>

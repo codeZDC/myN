@@ -37,15 +37,37 @@
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script>
 		layui.use('form');
+		var isAjax = false;
 		$('form').on('submit',function(e){
 			e.preventDefault();
-			$.post('/role/add',$(this).serialize(),function(res){
+			$('form button').attr('disabled','disabled')
+			$.ajax({
+				type:"post",
+				url:'/role',
+				data:$('form').serialize(),
+				async:true,
+				success:function(res){
+				/*	layer.alert(res,function(){
+					parent.reloadData();
+					parent.layer.closeAll()
+				});*/
+				layer.msg(res, {
+				  //icon: 1,
+				  time: 800 //2秒关闭（如果不配置，默认是3秒）
+				}, function(){
+				    parent.reloadData();
+					parent.layer.closeAll();
+				});  
+				}
+			});
+			/*$.put('/role/add',$(this).serialize(),function(res){
 				layer.alert(res,function(){
 					parent.reloadData();
 					parent.layer.closeAll()
 				});
-			})
+			})*/
 		})
+		
 	</script>
 
 </html>
