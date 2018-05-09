@@ -1,0 +1,71 @@
+var navs = [{
+	"title": "运维系统",
+	"icon": "fa-cubes",
+	"spread": true,//true为打开状态
+	"children": [{
+		"title": "角色管理",
+		"icon": "&#xe641;",
+		"href": "/roles.html"
+	}, {
+		"title": "用户管理",
+		"icon": "&#xe63c;",
+		"href": "/users.html"
+	}, {
+		"title": "登录日志",
+		"icon": "&#xe63c;",
+		"href": "table.html"
+	}, {
+		"title": "网站流量",
+		"icon": "&#xe609;",
+		"href": "nav.html"
+	}]
+}, {
+	"title": "组件",
+	"icon": "fa-cogs",
+	"spread": false,
+	"children": [{
+		"title": "Datatable",
+		"icon": "fa-table",
+		"href": "begtable.html"
+	}, {
+		"title": "Navbar组件",
+		"icon": "fa-navicon",
+		"href": "navbar.html"
+	}]
+}, {
+	"title": "第三方组件",
+	"icon": "&#x1002;",
+	"spread": false,
+	"children": [{
+		"title": "iCheck组件",
+		"icon": "fa-check-square-o",
+		"href": "icheck.html"
+	}]
+}, {
+	"title": "地址本",
+	"icon": "fa-address-book",
+	"href": "",
+	"spread": false,
+	"children": [{
+		"title": "Github",
+		"icon": "fa-github",
+		"href": "https://www.github.com/"
+	}, {
+		"title": "QQ",
+		"icon": "fa-qq",
+		"href": "http://www.qq.com/"
+	}, {
+		"title": "Fly社区",
+		"icon": "&#xe609;",
+		"href": "http://fly.layui.com/"
+	}, {
+		"title": "新浪微博",
+		"icon": "fa-weibo",
+		"href": "http://weibo.com/"
+	}]
+}, {
+	"title": "这是一级导航",
+	"icon": "fa-stop-circle",
+	"href": "https://www.baidu.com",
+	"spread": false
+}];

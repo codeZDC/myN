@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="/css/common.css" media="all">
+	</head>
+
+	<body>
+		<!--添加角色表单-->
+		<div class="p20">
+			<form class="layui-form">
+				<div class="layui-form-item">
+					<label class="layui-form-label">角色名</label>
+					<div class="layui-input-inline">
+						<input type="text" name="roleName" required lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">角色信息</label>
+					<div class="layui-input-inline">
+						<input type="text" name="remarks" required lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+					</div>
+					<div class="layui-form-mid layui-word-aux">辅助文字</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit  lay-filter="formDemo">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+	<script src="/layui/layui.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script>
+		layui.use('form');
+		$('form').on('submit',function(e){
+			e.preventDefault();
+			$.post('/role/add',$(this).serialize(),function(res){
+				layer.alert(res,function(){
+					parent.reloadData();
+					parent.layer.closeAll()
+				});
+			})
+		})
+	</script>
+
+</html>

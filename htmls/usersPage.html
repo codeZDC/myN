@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+		<table align="center" border="1" cellspacing="0">
+			<tr>
+				<th>ID</th>
+				<th>姓名</th>
+				<th>年龄</th>
+			</tr>
+		</table>
+	<body>
+	</body>
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script>
+		$(function() {
+			getUsers();
+		})
+
+		function getUsers() {
+			$.getJSON('/getUsers', function(res) {
+				console.log(res)
+				res.forEach(function(per,i){
+					$('<tr>\
+						<th>'+per.id+'</th>\
+						<th>'+per.name+'</th>\
+						<th>'+per.age+'</th>\
+					</tr>').appendTo($('table'));
+				})
+			});
+		}
+	</script>
+
+</html>
